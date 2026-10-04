@@ -1,0 +1,54 @@
+﻿PROYECTO: Identificación de centros de salud aislados tras un sismo
+Curso 1AMA0726 - Matemática Computacional
+Lenguaje: C++/CLR (.NET Framework 4.8) con Windows Forms
+==========================================================================
+
+1. REQUISITOS EN VISUAL STUDIO 2026
+   Abra el "Visual Studio Installer", pulse "Modificar" y verifique que estén marcados:
+   - Carga de trabajo: "Desarrollo para el escritorio con C++".
+   - Componente individual: "Compatibilidad con C++/CLI para herramientas de
+     compilación v145" (busque "C++/CLI" en la pestaña Componentes individuales).
+   - Componente individual: "Paquete de compatibilidad de .NET Framework 4.8".
+
+2. CÓMO ABRIRLO Y EJECUTARLO
+   a) Descomprima el ZIP en una carpeta que NO esté dentro de OneDrive (por ejemplo,
+      C:\Proyectos\ComponentesConexas).
+   b) Haga doble clic en "ComponentesConexas.sln".
+   c) Arriba, elija la configuración "Debug" y la plataforma "x64".
+   d) Pulse F5 (o el botón verde "Depurador local de Windows").
+   e) Si Visual Studio pide "Redestinar proyectos", acepte con los valores sugeridos.
+
+   El ejecutable queda en:  x64\Debug\ComponentesConexas.exe
+   (Para la entrega final compile en "Release" y use x64\Release\ComponentesConexas.exe)
+
+3. SI PREFIEREN CREAR EL PROYECTO DESDE CERO CON LA PLANTILLA
+   a) Archivo > Nuevo > Proyecto > "Aplicación de consola CLR (.NET Framework)"
+      (CLR Console App .NET Framework). Nombre: ComponentesConexas.
+   b) Borre el .cpp que crea la plantilla y agregue los archivos main.cpp y MyForm.h
+      de este ZIP (clic derecho en el proyecto > Agregar > Elemento existente).
+   c) Clic derecho en "Referencias" > Agregar referencia > marque:
+      System, System.Drawing y System.Windows.Forms.
+   d) Propiedades del proyecto (Todas las configuraciones, Todas las plataformas):
+      - C/C++ > Encabezados precompilados > "No utilizar encabezados precompilados".
+      - Vinculador > Sistema > Subsistema: "Windows (/SUBSYSTEM:WINDOWS)".
+      - Vinculador > Avanzado > Punto de entrada: main
+      (Estos dos últimos pasos evitan que aparezca la ventana negra de consola.)
+
+4. ARCHIVOS
+   - main.cpp : punto de entrada; abre la ventana principal.
+   - MyForm.h : interfaz y toda la lógica (construcción del grafo, matriz de
+                adyacencia, algoritmo BFS paso a paso, dibujo y simulación de colapso).
+   La interfaz se crea por código, por lo que no se usa el diseñador de formularios.
+
+5. USO DEL PROGRAMA
+   1) Elija el número de centros de salud (4 a 12).
+   2) Elija el modo: Aleatorio o Manual. En modo manual marque las vías transitables
+      en la tabla (zona blanca; la parte gris se completa sola por simetría).
+   3) Pulse "Construir grafo": se muestran el grafo y la matriz de adyacencia.
+   4) Pulse "Siguiente paso" para avanzar el algoritmo o "Resolver todo".
+   5) Revise el registro de pasos y el resultado (componentes y centros aislados).
+   6) Elija una vía y pulse "Simular colapso de vía" para ver cómo cambia la red.
+
+   Prueba sugerida (ejemplo del informe, Tabla 1): modo Manual, n = 7, marque
+   H1-H2, H1-H3, H3-H4 y H5-H6. Resultado esperado: 3 componentes
+   {H1,H2,H3,H4}, {H5,H6} y {H7} (H7 aislado).
