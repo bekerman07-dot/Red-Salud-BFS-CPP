@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Salud Post-Sismo | Análisis BFS</title>
+    <title>Red Salud Perú | Sistema de Emergencia Post-Sismo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0d19;
-            --accent-gold: #38bdf8;
-            --accent-gold-hover: #0284c7;
-            --card-bg: rgba(18, 22, 41, 0.85);
-            --border-color: rgba(56, 189, 248, 0.3);
+            --bg-color: #080b14;
+            --accent-cyan: #38bdf8;
+            --accent-blue: #0284c7;
+            --accent-red: #ef4444;
+            --card-bg: rgba(15, 20, 36, 0.85);
+            --border-color: rgba(56, 189, 248, 0.25);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -24,14 +25,14 @@
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 60%);
+                radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 90%, rgba(239, 68, 68, 0.1) 0%, transparent 60%);
             color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
         }
 
-        /* 1. NAVBAR FIXA SUPERIOR */
+        /* BARRA SUPERIOR FIJA */
         nav {
             position: fixed;
             top: 0;
@@ -40,20 +41,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 40px;
-            background: rgba(11, 13, 25, 0.95);
-            backdrop-filter: blur(10px);
+            padding: 16px 40px;
+            background: rgba(8, 11, 20, 0.92);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
         }
 
-        .logo {
+        .nav-brand {
             font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: var(--text-main);
-            text-transform: uppercase;
         }
 
         .nav-links {
@@ -73,26 +73,24 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--accent-gold);
-        }
+        .nav-links a:hover { color: var(--accent-cyan); }
 
         .btn-nav-download {
-            border: 1px solid var(--accent-gold);
+            border: 1px solid var(--accent-cyan);
             padding: 8px 18px;
-            color: var(--accent-gold) !important;
-            border-radius: 4px;
+            color: var(--accent-cyan) !important;
+            border-radius: 6px;
             transition: all 0.3s ease !important;
         }
 
         .btn-nav-download:hover {
-            background: var(--accent-gold);
-            color: #0b0d19 !important;
+            background: var(--accent-cyan);
+            color: #080b14 !important;
         }
 
-        /* 2. HERO PRINCIPAL CENTRADO */
+        /* SECCIÓN HERO PRINCIPAL */
         .hero-section {
-            padding-top: 130px;
+            padding-top: 120px;
             padding-bottom: 60px;
             display: flex;
             justify-content: center;
@@ -104,81 +102,117 @@
         .hero-card {
             background: var(--card-bg);
             border: 2px solid var(--border-color);
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 900px;
+            border-radius: 28px;
+            padding: 48px 36px;
+            max-width: 950px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
         }
 
-        .banner-img-box {
+        /* 1. TÍTULO GRANDE DE LA ORGANIZACIÓN / PROYECTO */
+        .org-header {
+            margin-bottom: 24px;
+        }
+
+        .org-badge {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+            line-height: 1.1;
+        }
+
+        /* 2. BANNER PRINCIPAL */
+        .banner-container {
             width: 100%;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            margin: 28px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .banner-img-box img {
+        .banner-container img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .hero-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        /* 3. DESCRIPCIÓN CON LETRAS BONITAS Y SUBTÍTULO */
+        .description-box {
+            max-width: 800px;
+            margin: 0 auto 30px;
         }
 
         .hero-subtitle {
-            font-style: italic;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
 
+        .hero-paragraph {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* BOTONES DE ACCIÓN */
         .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 18px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-gold), #0284c7);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
             color: #ffffff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: 14px 28px;
-            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 16px 32px;
+            border-radius: 8px;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
             transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.55);
         }
 
         .btn-secondary {
             border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-main);
             font-weight: 700;
-            font-size: 0.9rem;
-            padding: 14px 28px;
-            border-radius: 6px;
+            font-size: 0.95rem;
+            padding: 16px 32px;
+            border-radius: 8px;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -187,18 +221,18 @@
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent-gold);
+            border-color: var(--accent-cyan);
         }
 
         .hero-meta {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             letter-spacing: 1px;
         }
 
-        /* 3. SECCIONES DE CONTENIDO */
+        /* CONTENIDO SECUNDARIO */
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 0 20px 80px;
         }
@@ -206,15 +240,15 @@
         .section-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
+            border-radius: 20px;
+            padding: 36px;
             margin-bottom: 40px;
         }
 
         .section-title {
             font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: var(--accent-gold);
+            font-size: 1.6rem;
+            color: var(--accent-cyan);
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
@@ -229,28 +263,29 @@
             nav { padding: 15px 20px; }
             .nav-links { display: none; }
             .grid-2 { grid-template-columns: 1fr; }
-            .hero-title { font-size: 2rem; }
+            .main-title { font-size: 2.1rem; }
         }
 
         .info-box-red {
             background: rgba(239, 68, 68, 0.08);
-            border-left: 4px solid #ef4444;
-            padding: 16px;
-            border-radius: 8px;
+            border-left: 4px solid var(--accent-red);
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .info-box-green {
             background: rgba(34, 197, 94, 0.08);
             border-left: 4px solid #22c55e;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .screenshot-box {
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            margin-top: 15px;
+            margin-top: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .screenshot-box img {
@@ -270,62 +305,73 @@
 </head>
 <body>
 
-    <!-- NAVBAR TIPO GAME LANDING -->
+    <!-- BARRA NAVEGACIÓN -->
     <nav>
-        <div class="logo">Red Salud BFS</div>
+        <div class="nav-brand">RED SALUD PERÚ</div>
         <ul class="nav-links">
             <li><a href="#problematica">Problemática</a></li>
-            <li><a href="#algoritmo">Algoritmo</a></li>
             <li><a href="#capturas">Capturas</a></li>
             <li><a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-nav-download">Descargar</a></li>
         </ul>
     </nav>
 
-    <!-- HERO CENTRAL CON ESTILO PHANTOM GLADIATORS -->
+    <!-- SECCIÓN HERO COMPLETA -->
     <section class="hero-section">
         <div class="hero-card">
             
-            <div class="banner-img-box">
+            <!-- 1. TÍTULO GRANDE -->
+            <div class="org-header">
+                <span class="org-badge">🚨 Plataforma de Emergencia Sísmica</span>
+                <h1 class="main-title">Red de Salud Post-Sismo</h1>
+            </div>
+
+            <!-- 2. BANNER PRINCIPAL -->
+            <div class="banner-container">
                 <img src="banner.jpg" alt="Red de Salud Post-Sismo Banner" onerror="this.src='banner.png'">
             </div>
 
-            <h1 class="hero-title">Red de Salud Post-Sismo</h1>
-            <p class="hero-subtitle">Sepa en segundos qué centros de salud quedaron aislados tras un sismo.</p>
+            <!-- 3. DESCRIPCIÓN ESTILIZADA -->
+            <div class="description-box">
+                <h2 class="hero-subtitle">Identificación de Centros de Salud Aislados mediante Grafos y BFS</h2>
+                <p class="hero-paragraph">
+                    Sistema computacional avanzado diseñado para analizar la infraestructura vial tras desastres naturales. Evalúa la conectividad en segundos y determina qué hospitales han quedado incomunicados para el envío inmediato de soporte aéreo y brigadas médicas.
+                </p>
+            </div>
 
+            <!-- BOTONES -->
             <div class="hero-buttons">
                 <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-primary">
-                    💻 Descargar para Windows
+                    💻 Descargar para Windows (.exe)
                 </a>
                 <a href="#capturas" class="btn-secondary">
                     📷 Ver Capturas
                 </a>
             </div>
 
-            <p class="hero-meta">Versión 1.0 · C++ / CLR Windows Forms · Gratis</p>
+            <p class="hero-meta">Versión 1.0 · Desarrollado en C++ / CLR Windows Forms · Gratis</p>
         </div>
     </section>
 
+    <!-- SECCIONES DE CONTENIDO SECUNDARIO -->
     <main class="container">
 
-        <!-- PROBLEMATICA Y SOLUCION -->
         <section class="section-card" id="problematica">
             <h2 class="section-title">Análisis de la Emergencia</h2>
             <div class="grid-2">
                 <div class="info-box-red">
-                    <h3 style="color: #ef4444; margin-bottom: 8px;">🚨 La Problemática</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem;">Un sismo destruye las carreteras y aisla hospitales. Las autoridades no saben qué centros requieren puentes aéreos inmediatos.</p>
+                    <h3 style="color: var(--accent-red); margin-bottom: 8px;">🚨 La Problemática</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Un sismo masivo destruye carreteras y puentes principales. Las autoridades quedan a ciegas sobre qué hospitales han quedado aislados sin vía terrestre para ambulancias.</p>
                 </div>
                 <div class="info-box-green">
-                    <h3 style="color: #22c55e; margin-bottom: 8px;">💡 La Solución</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem;">Mediante Búsqueda en Anchura (BFS), el software procesa el grafo vial e identifica componentes aisladas en tiempo real.</p>
+                    <h3 style="color: #22c55e; margin-bottom: 8px;">💡 La Solución Algorítmica</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Aplicando Búsqueda en Anchura (BFS) sobre la matriz de adyacencia del grafo vial, identificamos las componentes conexas en milisegundos.</p>
                 </div>
             </div>
         </section>
 
-        <!-- CAPTURAS -->
         <section class="section-card" id="capturas">
-            <h2 class="section-title">Interfaz del Software</h2>
-            <p style="color: var(--text-muted);">Simulación gráfica con matriz de adyacencia y cálculo de componentes conexas:</p>
+            <h2 class="section-title">Interfaz Interactiva del Software</h2>
+            <p style="color: var(--text-muted);">Panel de simulación en Windows Forms con cálculo en tiempo real de nodos aislados y colapso de vías:</p>
             <div class="screenshot-box">
                 <img src="captura.jpg" alt="Simulación interactiva BFS" onerror="this.src='captura.png'">
             </div>
