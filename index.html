@@ -3,42 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Salud BFS - Aplicación C++</title>
+    <title>Red de Salud Post-Sismo | Búsqueda en Anchura (BFS)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #0284c7;
+            --accent-light: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 40px; max-width: 650px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; }
-        h1 { color: #58a6ff; font-size: 2rem; margin-bottom: 10px; }
-        p.subtitle { color: #8b949e; font-size: 1.1rem; margin-bottom: 25px; }
-        .info-box { background: #21262d; border-left: 4px solid #238636; text-align: left; padding: 15px 20px; margin-bottom: 30px; border-radius: 4px; }
-        .info-box h3 { color: #3fb950; margin-bottom: 8px; font-size: 1rem; }
-        .info-box ul { margin-left: 20px; font-size: 0.95rem; line-height: 1.6; }
-        .btn-download { display: inline-block; background-color: #238636; color: white; font-weight: bold; font-size: 1.1rem; padding: 14px 28px; text-decoration: none; border-radius: 8px; transition: background 0.2s; }
-        .btn-download:hover { background-color: #2ea043; }
-        footer { margin-top: 30px; font-size: 0.85rem; color: #8b949e; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Banner Hero Header */
+        .hero-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-banner {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Contenido principal */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-light);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p { color: var(--text-muted); font-size: 1rem; margin-bottom: 16px; }
+
+        ul { margin-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 8px; }
+
+        /* Captura de la aplicación */
+        .preview-box {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .preview-box img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Seccion de descarga */
+        .download-card {
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid var(--accent-blue);
+            padding: 40px 20px;
+            border-radius: 16px;
+            margin-top: 30px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background: #22c55e;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+            margin-top: 15px;
+        }
+
+        .btn-download:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🏥 Red Salud BFS - App</h1>
-        <p class="subtitle">Identificación de Centros de Salud Aislados mediante Grafos y BFS</p>
-        
-        <div class="info-box">
-            <h3>📌 Acerca del Proyecto</h3>
-            <ul>
-                <li><strong>Algoritmo:</strong> Busqueda en Anchura (BFS) para detección de componentes conexas.</li>
-                <li><strong>Tecnología:</strong> C++ / CLR Windows Forms[cite: 2].</li>
-                <li><strong>Objetivo:</strong> Analizar la conectividad en redes de centros de salud y determinar nodos aislados[cite: 2, 10].</li>
-            </ul>
+
+    <!-- Banner Principal -->
+    <div class="hero-container">
+        <div class="hero-banner">
+            <img src="banner.jpg" alt="Red de Salud Post-Sismo" onerror="this.src='banner.png'">
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Grid Informativo -->
+        <div class="grid-2">
+            <div class="card">
+                <h2>🚑 Identificación de Centros Aislados</h2>
+                <p>Ante un desastre natural o sismo de gran magnitud, la conectividad entre los centros de salud se ve comprometida por el colapso de vías y carreteras.</p>
+                <p>Esta aplicación permite modelar la infraestructura vial como un **grafo no dirigido** y determinar en tiempo real qué hospitales quedan incomunicados o requieren atención prioritaria por vía aérea.</p>
+            </div>
+
+            <div class="card">
+                <h2>🧮 Algoritmo BFS & Componentes Conexas</h2>
+                <ul>
+                    <li><strong>Matriz de Adyacencia:</strong> Representación gráfica de vías transitables entre centros de salud.</li>
+                    <li><strong>Búsqueda en Anchura (BFS):</strong> Explora la red paso a paso clasificando las componentes conexas de la red.</li>
+                    <li><strong>Simulación de Colapsos:</strong> Permite simular el colapso de carreteras específicas para evaluar el impacto en la red.</li>
+                </ul>
+            </div>
         </div>
 
-        <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-download">
-            ⬇️ Descargar Aplicación para Windows (.exe)
-        </a>
+        <!-- Muestra de la Interfaz Interactiva -->
+        <div class="card">
+            <h2>🖥️ Interfaz Gráfica y Simulación del Algoritmo</h2>
+            <p>Vista del panel interactivo donde se visualiza el grafo de la red de salud, la matriz de adyacencia y el registro de pasos en tiempo real:</p>
+            <div class="preview-box">
+                <img src="captura.jpg" alt="Simulación interactiva del algoritmo BFS" onerror="this.src='captura.png'">
+            </div>
+        </div>
+
+        <!-- Sección de Descarga -->
+        <div class="download-card">
+            <h2 style="justify-content: center;">📦 Descargar Aplicación Oficial</h2>
+            <p style="max-width: 600px; margin: 10px auto 20px;">Obtén el ejecutable directo para Windows desarrollado en C++ / CLR Windows Forms listo para usar.</p>
+            <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-download">
+                ⬇️ Descargar Ejecutable (.exe)
+            </a>
+        </div>
 
         <footer>
-            Desarrollado en C++ | Publicado con GitHub Pages
+            Matemática Computacional | Análisis de Componentes Conexas mediante BFS
         </footer>
+
     </div>
+
 </body>
 </html>
