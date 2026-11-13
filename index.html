@@ -110,7 +110,6 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(56, 189, 248, 0.15);
         }
 
-        /* 1. TÍTULO GRANDE DE LA ORGANIZACIÓN / PROYECTO */
         .org-header {
             margin-bottom: 24px;
         }
@@ -140,7 +139,6 @@
             line-height: 1.1;
         }
 
-        /* 2. BANNER PRINCIPAL */
         .banner-container {
             width: 100%;
             border-radius: 18px;
@@ -156,7 +154,6 @@
             display: block;
         }
 
-        /* 3. DESCRIPCIÓN CON LETRAS BONITAS Y SUBTÍTULO */
         .description-box {
             max-width: 800px;
             margin: 0 auto 30px;
@@ -177,7 +174,6 @@
             font-weight: 400;
         }
 
-        /* BOTONES DE ACCIÓN */
         .hero-buttons {
             display: flex;
             justify-content: center;
@@ -285,6 +281,7 @@
             overflow: hidden;
             border: 1px solid var(--border-color);
             margin-top: 18px;
+            margin-bottom: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -292,6 +289,23 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .screenshot-caption {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .aviso {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            color: #fde047;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.92rem;
         }
 
         footer {
@@ -311,7 +325,8 @@
         <ul class="nav-links">
             <li><a href="#problematica">Problemática</a></li>
             <li><a href="#capturas">Capturas</a></li>
-            <li><a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-nav-download">Descargar</a></li>
+            <li><a href="#descargar">Descargar</a></li>
+            <li><a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/latest/download/ComponentesConexas.zip" class="btn-nav-download">Descargar .zip</a></li>
         </ul>
     </nav>
 
@@ -319,18 +334,15 @@
     <section class="hero-section">
         <div class="hero-card">
             
-            <!-- 1. TÍTULO GRANDE -->
             <div class="org-header">
                 <span class="org-badge">🚨 Plataforma de Emergencia Sísmica</span>
                 <h1 class="main-title">Red de Salud Post-Sismo</h1>
             </div>
 
-            <!-- 2. BANNER PRINCIPAL -->
             <div class="banner-container">
-                <img src="banner.jpg" alt="Red de Salud Post-Sismo Banner" onerror="this.src='banner.png'">
+                <img src="banner.png" alt="Red de Salud Post-Sismo Banner">
             </div>
 
-            <!-- 3. DESCRIPCIÓN ESTILIZADA -->
             <div class="description-box">
                 <h2 class="hero-subtitle">Identificación de Centros de Salud Aislados mediante Grafos y BFS</h2>
                 <p class="hero-paragraph">
@@ -338,17 +350,16 @@
                 </p>
             </div>
 
-            <!-- BOTONES -->
             <div class="hero-buttons">
-                <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/download/v1.0.0/ComponentesConexas.exe" class="btn-primary">
-                    💻 Descargar para Windows (.exe)
+                <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/latest/download/ComponentesConexas.zip" class="btn-primary">
+                    💻 Descargar para Windows (.zip)
                 </a>
                 <a href="#capturas" class="btn-secondary">
                     📷 Ver Capturas
                 </a>
             </div>
 
-            <p class="hero-meta">Versión 1.0 · Desarrollado en C++ / CLR Windows Forms · Gratis</p>
+            <p class="hero-meta">Versión 1.1 · Desarrollado en C++ / CLR Windows Forms · Gratuito</p>
         </div>
     </section>
 
@@ -364,16 +375,65 @@
                 </div>
                 <div class="info-box-green">
                     <h3 style="color: #22c55e; margin-bottom: 8px;">💡 La Solución Algorítmica</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem;">Aplicando Búsqueda en Anchura (BFS) sobre la matriz de adyacencia del grafo vial, identificamos las componentes conexas en milisegundos.</p>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Aplicando Búsqueda en Anchura (BFS) sobre la matriz de adyacencia del grafo vial, identificamos las componentes conexas en tiempo récord.</p>
                 </div>
             </div>
         </section>
 
         <section class="section-card" id="capturas">
-            <h2 class="section-title">Interfaz Interactiva del Software</h2>
-            <p style="color: var(--text-muted);">Panel de simulación en Windows Forms con cálculo en tiempo real de nodos aislados y colapso de vías:</p>
+            <h2 class="section-title">Capturas del Programa</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Demostración de la interfaz interactiva y simulación de escenarios críticos:</p>
+            
             <div class="screenshot-box">
-                <img src="captura.jpg" alt="Simulación interactiva BFS" onerror="this.src='captura.png'">
+                <img src="Red-conectada.png" alt="Red conectada inicialmente">
+            </div>
+            <p class="screenshot-caption">Figura 1: Visualización inicial de la red de centros de salud conectados por vías terrestres.</p>
+
+            <div class="screenshot-box">
+                <img src="varias-componentes.png" alt="Detección de varias componentes">
+            </div>
+            <p class="screenshot-caption">Figura 2: Análisis del grafo dividiéndose en múltiples componentes conexas.</p>
+
+            <div class="screenshot-box">
+                <img src="centros-aislados.png" alt="Alerta de centros de salud aislados">
+            </div>
+            <p class="screenshot-caption">Figura 3: Alerta detallada indicando los hospitales que han quedado completamente incomunicados.</p>
+
+            <div class="screenshot-box">
+                <img src="pruebacompleta.png" alt="Prueba completa del algoritmo BFS">
+            </div>
+            <p class="screenshot-caption">Figura 4: Ejecución del recorrido BFS paso a paso sobre la red de salud.</p>
+
+            <div class="screenshot-box">
+                <img src="resultadosdeprueba.png" alt="Panel de resultados e indicadores finales">
+            </div>
+            <p class="screenshot-caption">Figura 5: Panel final con métricas, estadísticas y reporte del estado operativo de la red.</p>
+        </section>
+
+        <section class="section-card" id="descargar">
+            <h2 class="section-title">Instrucciones de Descarga</h2>
+            <div class="grid-2">
+                <div>
+                    <h3 style="color: var(--text-main); margin-bottom: 12px; font-size: 1.05rem;">Pasos para ejecutar:</h3>
+                    <ol style="color: var(--text-muted); padding-left: 20px; font-size: 0.95rem; line-height: 1.8;">
+                        <li>Haz clic en el botón de descarga del enlace superior.</li>
+                        <li>Extrae el archivo <b>ComponentesConexas.zip</b> en tu computadora.</li>
+                        <li>Abre la carpeta resultante y ejecuta <b>ComponentesConexas.exe</b>.</li>
+                    </ol>
+                    <div style="margin-top: 24px;">
+                        <a href="https://github.com/bekerman07-dot/Red-Salud-BFS-CPP/releases/latest/download/ComponentesConexas.zip" class="btn-primary" style="display: inline-block;">📥 Descargar ComponentesConexas.zip</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-main); margin-bottom: 12px; font-size: 1.05rem;">Requisitos y Notas:</h3>
+                    <ul style="color: var(--text-muted); padding-left: 20px; font-size: 0.95rem; line-height: 1.8;">
+                        <li>Windows 10 u 11 (64 bits).</li>
+                        <li>.NET Framework 4.x (integrado en Windows).</li>
+                    </ul>
+                    <div class="aviso">
+                        ⚠️ <b>Nota de Windows Defender:</b> Si aparece la advertencia <i>"Windows protegió su PC"</i>, haz clic en <b>Más información</b> y luego en <b>Ejecutar de todas formas</b>. Es completamente normal en ejecutables independientes sin firma comercial.
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -381,7 +441,7 @@
 
     <footer>
         <p>Red de Salud Post-Sismo — Algoritmos y Matemática Computacional</p>
-        <p style="margin-top: 4px; opacity: 0.6;">Desarrollado en C++ / CLR | Publicado con GitHub Pages</p>
+        <p style="margin-top: 4px; opacity: 0.6;">Desarrollado en C++ / CLR · Universidad Peruana de Ciencias Aplicadas (UPC)</p>
     </footer>
 
 </body>
